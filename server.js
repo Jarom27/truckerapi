@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const body_parser = require('body-parser')
+const mongo = require("./database")
 const cors = require('cors')
 require("dotenv").config()
 
@@ -19,6 +20,13 @@ app.use(body_parser.json())
     .use(cors({ origin: "*" }))
 
 app.use(require("./routes/"))
-app.listen(PORT, () => {
-    console.log(`Server running on ${HOST}:${PORT}`)
+mongo.initDb((err) => {
+    if (err) {
+        console.error(err)
+    }
+    else {
+        app.listen(PORT, () => {
+            console.log(`Database is listening and running on port ${PORT}`)
+        })
+    }
 })

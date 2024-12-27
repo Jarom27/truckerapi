@@ -1,5 +1,6 @@
-const router = require('express').Router()
-const deviceController = require('../controllers/Devices')
-router.get('/', deviceController.getAllDevices)
-router.get('/:id', deviceController.getSingleDevice)
+const router = require("express").Router()
+const deviceController = require("../controllers/Device")
+const validation = require("../middleware/auth")
+router.get("/:userId", validation.validateToken, deviceController.getDevicesByUser)
+
 module.exports = router
